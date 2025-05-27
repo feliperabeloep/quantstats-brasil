@@ -951,7 +951,7 @@ def monthly_heatmap(
     active=False,
 ):
     # colors, ls, alpha = _core._get_colors(grayscale)
-    cmap = "gray" if grayscale else "RdYlGn"
+    cmap = "Blues" if grayscale else "RdYlGn"
 
     returns = _stats.monthly_returns(returns, eoy=eoy, compounded=compounded) * 100
 
