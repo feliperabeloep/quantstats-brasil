@@ -63,7 +63,7 @@ def snapshot(
     returns,
     grayscale=False,
     figsize=(10, 8),
-    title="Portfolio Summary",
+    title="Resumo do Portfólio",
     fontname="Arial",
     lw=1.5,
     mode="comp",
@@ -149,7 +149,7 @@ def snapshot(
             )
 
     axes[0].set_ylabel(
-        "Cumulative Return", fontname=fontname, fontweight="bold", fontsize=12
+        "Retorno Acumulado", fontname=fontname, fontweight="bold", fontsize=12
     )
     if isinstance(returns, _pd.Series):
         axes[0].plot(
@@ -202,7 +202,7 @@ def snapshot(
     # axes[1].legend(fontsize=12)
 
     axes[2].set_ylabel(
-        "Daily Return", fontname=fontname, fontweight="bold", fontsize=12
+        "Retorno Diário", fontname=fontname, fontweight="bold", fontsize=12
     )
     if isinstance(returns, _pd.Series):
         axes[2].plot(
@@ -270,7 +270,7 @@ def earnings(
     mode="comp",
     grayscale=False,
     figsize=(10, 6),
-    title="Portfolio Earnings",
+    title="Lucro do Portfólio",
     fontname="Arial",
     lw=1.5,
     subtitle=True,
@@ -333,7 +333,7 @@ def earnings(
     ax.plot(returns.index, returns, color=colors[1], lw=1 if grayscale else lw)
 
     ax.set_ylabel(
-        "Value of  ${:,.0f}".format(start_balance),
+        "Valor de R${:,.0f}".format(start_balance),
         fontname=fontname,
         fontweight="bold",
         fontsize=11,
@@ -385,21 +385,21 @@ def returns(
     compound=True,
     cumulative=True,
     resample=None,
-    ylabel="Cumulative Returns",
+    ylabel="Retornos Acumulados",
     subtitle=True,
     savefig=None,
     show=True,
     prepare_returns=True,
 ):
 
-    title = "Cumulative Returns" if compound else "Returns"
+    title = "Retornos Acumulados" if compound else "Retornos"
     if benchmark is not None:
         if isinstance(benchmark, str):
             title += " vs %s" % benchmark.upper()
         else:
             title += " vs Benchmark"
         if match_volatility:
-            title += " (Volatility Matched)"
+            title += " (Ajustado à Volatilidade)"
 
         benchmark = _utils._prepare_benchmark(benchmark, returns.index)
 
@@ -439,23 +439,23 @@ def log_returns(
     compound=True,
     cumulative=True,
     resample=None,
-    ylabel="Cumulative Returns",
+    ylabel="Retornos Acumulados",
     subtitle=True,
     savefig=None,
     show=True,
     prepare_returns=True,
 ):
 
-    title = "Cumulative Returns" if compound else "Returns"
+    title = "Retornos Acumulados" if compound else "Retornos"
     if benchmark is not None:
         if isinstance(benchmark, str):
-            title += " vs %s (Log Scaled" % benchmark.upper()
+            title += " vs %s (Escala Log" % benchmark.upper()
         else:
-            title += " vs Benchmark (Log Scaled"
+            title += " vs Benchmark (Escala Log"
         if match_volatility:
-            title += ", Volatility Matched"
+            title += ", Ajustado à Volatilidade"
     else:
-        title += " (Log Scaled"
+        title += " (Escala Log"
     title += ")"
 
     if prepare_returns:
@@ -493,7 +493,7 @@ def daily_returns(
     fontname="Arial",
     lw=0.5,
     log_scale=False,
-    ylabel="Returns",
+    ylabel="Retornos",
     subtitle=True,
     savefig=None,
     show=True,
@@ -507,7 +507,7 @@ def daily_returns(
             benchmark = _utils._prepare_returns(benchmark)
             returns = returns - benchmark
 
-    plot_title = "Daily Active Returns" if active else "Daily Returns"
+    plot_title = "Retornos Diários ativos" if active else "Retornos Diários"
 
     fig = _core.plot_timeseries(
         returns,
@@ -549,7 +549,7 @@ def yearly_returns(
     prepare_returns=True,
 ):
 
-    title = "EOY Returns"
+    title = "Retornos por Ano"
     if benchmark is not None:
         title += "  vs Benchmark"
         benchmark = (
@@ -645,13 +645,13 @@ def histogram(
             benchmark = _utils._prepare_returns(benchmark)
 
     if resample == "W":
-        title = "Weekly "
+        title = "Semanal "
     elif resample == "ME":
-        title = "Monthly "
+        title = "Mensal "
     elif resample == "QE":
-        title = "Quarterly "
+        title = "Trimestral "
     elif resample == "YE":
-        title = "Annual "
+        title = "Anual "
     else:
         title = ""
 
@@ -661,7 +661,7 @@ def histogram(
         resample=resample,
         grayscale=grayscale,
         fontname=fontname,
-        title="Distribution of %sReturns" % title,
+        title="Distribuição dos %sRetornos" % title,
         figsize=figsize,
         ylabel=ylabel,
         subtitle=subtitle,
@@ -691,10 +691,10 @@ def drawdown(
 
     fig = _core.plot_timeseries(
         dd,
-        title="Underwater Plot",
+        title="Gráfico Underwater",
         hline=dd.mean(),
         hlw=2,
-        hllabel="Average",
+        hllabel="Média",
         returns_label="Drawdown",
         compound=compound,
         match_volatility=match_volatility,
@@ -756,9 +756,9 @@ def rolling_beta(
     returns,
     benchmark,
     window1=126,
-    window1_label="6-Months",
+    window1_label="6 meses",
     window2=252,
-    window2_label="12-Months",
+    window2_label="12 meses",
     lw=1.5,
     fontname="Arial",
     grayscale=False,
@@ -782,7 +782,7 @@ def rolling_beta(
         window1_label=window1_label,
         window2=window2,
         window2_label=window2_label,
-        title="Rolling Beta to Benchmark",
+        title="Beta móvel vs Benchmark",
         fontname=fontname,
         grayscale=grayscale,
         lw=lw,
@@ -799,8 +799,8 @@ def rolling_beta(
 def rolling_volatility(
     returns,
     benchmark=None,
-    period=126,
-    period_label="6-Months",
+    period=252,
+    period_label="12 meses",
     periods_per_year=252,
     lw=1.5,
     fontname="Arial",
@@ -826,7 +826,7 @@ def rolling_volatility(
         hline=returns.mean(),
         hlw=1.5,
         ylabel=ylabel,
-        title="Rolling Volatility (%s)" % period_label,
+        title="Volatilidade Anualizada (%s)" % period_label,
         fontname=fontname,
         grayscale=grayscale,
         lw=lw,
@@ -843,8 +843,8 @@ def rolling_sharpe(
     returns,
     benchmark=None,
     rf=0.0,
-    period=126,
-    period_label="6-Months",
+    period=252,
+    period_label="12 meses",
     periods_per_year=252,
     lw=1.25,
     fontname="Arial",
@@ -876,7 +876,7 @@ def rolling_sharpe(
         hline=returns.mean(),
         hlw=1.5,
         ylabel=ylabel,
-        title="Rolling Sharpe (%s)" % period_label,
+        title="Sharpe anualizado(%s)" % period_label,
         fontname=fontname,
         grayscale=grayscale,
         lw=lw,
@@ -893,8 +893,8 @@ def rolling_sortino(
     returns,
     benchmark=None,
     rf=0.0,
-    period=126,
-    period_label="6-Months",
+    period=252,
+    period_label="12 meses",
     periods_per_year=252,
     lw=1.25,
     fontname="Arial",
@@ -920,7 +920,7 @@ def rolling_sortino(
         hline=returns.mean(),
         hlw=1.5,
         ylabel=ylabel,
-        title="Rolling Sortino (%s)" % period_label,
+        title="Sortino anualizado (%s)" % period_label,
         fontname=fontname,
         grayscale=grayscale,
         lw=lw,
@@ -940,7 +940,7 @@ def monthly_heatmap(
     figsize=(8, 5),
     cbar=True,
     square=False,
-    returns_label="Strategy",
+    returns_label="Estratégia",
     compounded=True,
     eoy=False,
     grayscale=False,
@@ -978,7 +978,7 @@ def monthly_heatmap(
     # _sns.set(font_scale=.9)
     if active and benchmark is not None:
         ax.set_title(
-            f"{returns_label} - Monthly Active Returns (%)\n",
+            f"{returns_label} - Retornos Mensais ativos (%)\n",
             fontsize=14,
             y=0.995,
             fontname=fontname,
@@ -1005,7 +1005,7 @@ def monthly_heatmap(
         )
     else:
         ax.set_title(
-            f"{returns_label} - Monthly Returns (%)\n",
+            f"{returns_label} - Retornos Mensais (%)\n",
             fontsize=12,
             y=0.995,
             fontname=fontname,
@@ -1033,7 +1033,7 @@ def monthly_heatmap(
 
     # align plot to match other
     if ylabel:
-        ax.set_ylabel("Years", fontname=fontname, fontweight="bold", fontsize=12)
+        ax.set_ylabel("Anos", fontname=fontname, fontweight="bold", fontsize=12)
         ax.yaxis.set_label_coords(-0.1, 0.5)
 
     ax.tick_params(colors="#808080")
